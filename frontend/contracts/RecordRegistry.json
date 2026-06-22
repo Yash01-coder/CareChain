@@ -1,0 +1,30 @@
+[
+  {
+    "inputs": [
+      { "internalType": "string", "name": "_cid", "type": "string" },
+      { "internalType": "string", "name": "_recordType", "type": "string" }
+    ],
+    "name": "addRecord",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getMyRecords",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "string", "name": "cid", "type": "string" },
+          { "internalType": "string", "name": "recordType", "type": "string" },
+          { "internalType": "uint256", "name": "timestamp", "type": "uint256" }
+        ],
+        "internalType": "struct RecordRegistry.Record[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
