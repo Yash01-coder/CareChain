@@ -1,118 +1,105 @@
 # CareChain
 
-## Blockchain-Based Healthcare Record Management System
+CareChain is an India-first, open-source digital healthcare platform that helps patients securely own, manage, and share medical records with healthcare providers using modern web technology, encryption, IPFS storage, and blockchain-based verification.
 
-CareChain is a decentralized healthcare record management system that leverages Blockchain technology to provide secure, transparent, and patient-centric medical record management. The system enables patients to control access to their healthcare records while allowing authorized doctors to securely view medical information.
+The long-term vision is to build a patient-centric healthcare ecosystem with support for consent-first record sharing, ABDM/ABHA-style identity planning, AI-assisted healthcare features, mobile access, and hospital SaaS workflows.
 
----
+## Project Status
 
-## Project Information
+CareChain is currently in prototype-to-MVP transition.
 
-* **Project Title:** CareChain – Blockchain-Based Healthcare Record Management System
-* **Developer:** Yash Bhoyar
-* **Department:** Master of Computer Applications (MCA)
-* **Academic Year:** 2025–2026
+The project already includes:
 
----
+- React frontend
+- Node.js and Express backend
+- MongoDB database
+- Solidity smart contracts
+- IPFS-based file storage flow
+- JWT authentication
+- Patient and doctor workflows
+- Record upload and access control
+- Audit trail foundation
 
-## Features
+Current focus:
 
-* Secure User Authentication
-* Patient, Doctor, and Admin Modules
-* Healthcare Record Management
-* Ethereum Blockchain Integration
-* Smart Contract-Based Access Control
-* MetaMask Wallet Authentication
-* Audit Trail Monitoring
-* Role-Based Access Control
-* Secure Data Storage and Retrieval
+- Repository cleanup
+- Open-source preparation
+- Startup backlog creation
+- CareChain v2.0 MVP planning
 
----
+## India-First Direction
 
-## Technology Stack
+CareChain is being designed for India first.
+
+The platform will prepare for:
+
+- ABHA-style patient identity fields
+- Consent-first record sharing
+- Doctor and facility verification
+- India-friendly health workflows
+- Future ABDM alignment
+
+CareChain is not currently ABDM certified, government approved, or officially integrated with ABHA APIs.
+
+## Tech Stack
 
 ### Frontend
 
-* React.js
-* Tailwind CSS
-* JavaScript
+- React
+- Vite
+- Tailwind CSS
+- React Router
+- Framer Motion
+- Three.js / React Three Fiber
+- Axios
+- Ethers.js
 
 ### Backend
 
-* Node.js
-* Express.js
-
-### Database
-
-* MongoDB
+- Node.js
+- Express
+- MongoDB
+- Mongoose
+- JWT authentication
+- Multer
+- AES encryption utilities
+- Pinata/IPFS integration
 
 ### Blockchain
 
-* Ethereum
-* Solidity Smart Contracts
-* MetaMask
-* Ethers.js
-
----
+- Solidity
+- Hardhat
+- Ethers.js
 
 ## Project Structure
 
-CareChain
-
-├── frontend/
-
+```txt
+CareChain/
 ├── backend/
-
+│   ├── config/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── models/
+│   ├── routes/
+│   ├── utils/
+│   ├── .env.example
+│   └── server.js
 ├── blockchain/
-
-├── package.json
-
-├── package-lock.json
-
+│   ├── contracts/
+│   ├── ignition/
+│   ├── .env.example
+│   └── hardhat.config.js
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── assets/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   └── utils/
+│   └── package.json
+├── docs/
+│   ├── STARTUP_BACKLOG.md
+│   └── INDIA_ABDM_PLANNING.md
+├── .gitignore
 └── README.md
-
----
-
-## Installation
-
-### Clone Repository
-
-git clone https://github.com/Yash01-coder/CareChain.git
-
-### Install Dependencies
-
-npm install
-
-### Start Backend
-
-npm run dev
-
-### Start Frontend
-
-npm start
-
----
-
-## Objectives
-
-* Improve healthcare data security.
-* Provide decentralized healthcare record management.
-* Enable patient-controlled access permissions.
-* Maintain transparency through blockchain audit logs.
-* Ensure secure sharing of medical records.
-
----
-
-## Future Scope
-
-* AI-Based Healthcare Analytics
-* Mobile Application Development
-* Multi-Hospital Integration
-* Cloud and Hybrid Storage Support
-* IoT Healthcare Device Integration
-
----
-
-## License
-
-This project is developed for academic and educational purposes as part of the MCA Final Year Project.
