@@ -54,15 +54,20 @@ exports.register = async (req, res) => {
         walletAddress,
       });
 
-    res.status(201).json({
+    const safeUser = {
+  id: user._id,
+  name: user.name,
+  email: user.email,
+  role: user.role,
+  walletAddress: user.walletAddress,
+  isVerifiedDoctor: user.isVerifiedDoctor,
+};
 
-      success: true,
-
-      message:
-        "User registered successfully",
-
-      user,
-    });
+res.status(201).json({
+  success: true,
+  message: "User registered successfully",
+  user: safeUser,
+});
 
   } catch (error) {
 
@@ -133,14 +138,20 @@ exports.login = async (req, res) => {
       }
     );
 
-    res.status(200).json({
+    const safeUser = {
+  id: user._id,
+  name: user.name,
+  email: user.email,
+  role: user.role,
+  walletAddress: user.walletAddress,
+  isVerifiedDoctor: user.isVerifiedDoctor,
+};
 
-      success: true,
-
-      token,
-
-      user,
-    });
+res.status(200).json({
+  success: true,
+  token,
+  user: safeUser,
+});
 
   } catch (error) {
 
