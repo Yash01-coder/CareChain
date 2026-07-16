@@ -39,6 +39,17 @@ const recordSchema =
       default: "TEMP_CID",
     },
 
+        fileHash: {
+      type: String,
+      default: "",
+    },
+
+    verificationStatus: {
+      type: String,
+      enum: ["pending", "verified", "unverified"],
+      default: "pending",
+    },
+
     iv: {
     type: String,
     },

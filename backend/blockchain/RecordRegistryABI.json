@@ -4,12 +4,6 @@
       "inputs": [
         {
           "indexed": true,
-          "internalType": "uint256",
-          "name": "recordId",
-          "type": "uint256"
-        },
-        {
-          "indexed": true,
           "internalType": "address",
           "name": "patient",
           "type": "address"
@@ -17,8 +11,26 @@
         {
           "indexed": false,
           "internalType": "string",
-          "name": "ipfsHash",
+          "name": "cid",
           "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "recordType",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "fileHash",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
         }
       ],
       "name": "RecordAdded",
@@ -28,12 +40,17 @@
       "inputs": [
         {
           "internalType": "string",
-          "name": "_ipfsHash",
+          "name": "_cid",
           "type": "string"
         },
         {
           "internalType": "string",
           "name": "_recordType",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_fileHash",
           "type": "string"
         }
       ],
@@ -43,49 +60,14 @@
       "type": "function"
     },
     {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_patient",
-          "type": "address"
-        }
-      ],
-      "name": "getPatientRecords",
-      "outputs": [
-        {
-          "internalType": "uint256[]",
-          "name": "",
-          "type": "uint256[]"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_recordId",
-          "type": "uint256"
-        }
-      ],
-      "name": "getRecord",
+      "inputs": [],
+      "name": "getMyRecords",
       "outputs": [
         {
           "components": [
             {
-              "internalType": "uint256",
-              "name": "recordId",
-              "type": "uint256"
-            },
-            {
-              "internalType": "address",
-              "name": "patient",
-              "type": "address"
-            },
-            {
               "internalType": "string",
-              "name": "ipfsHash",
+              "name": "cid",
               "type": "string"
             },
             {
@@ -94,93 +76,22 @@
               "type": "string"
             },
             {
+              "internalType": "string",
+              "name": "fileHash",
+              "type": "string"
+            },
+            {
               "internalType": "uint256",
               "name": "timestamp",
               "type": "uint256"
             }
           ],
-          "internalType": "struct RecordRegistry.MedicalRecord",
+          "internalType": "struct RecordRegistry.Record[]",
           "name": "",
-          "type": "tuple"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "name": "patientRecords",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "recordCounter",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "name": "records",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "recordId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "patient",
-          "type": "address"
-        },
-        {
-          "internalType": "string",
-          "name": "ipfsHash",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "recordType",
-          "type": "string"
-        },
-        {
-          "internalType": "uint256",
-          "name": "timestamp",
-          "type": "uint256"
+          "type": "tuple[]"
         }
       ],
       "stateMutability": "view",
       "type": "function"
     }
-  ]
+]

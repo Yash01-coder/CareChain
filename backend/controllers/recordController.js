@@ -1,3 +1,4 @@
+const crypto = require("crypto");
 const Record = require("../models/Record");
 const AccessGrant = require("../models/AccessGrant");
 const AuditLog = require("../models/AuditLog");
@@ -52,9 +53,15 @@ exports.uploadRecord = async (req, res) => {
 
     console.log("IPFS HASH:", ipfsHash);
 
+    const fileHash = crypto
+  .createHash("sha256")
+  .update(req.file.buffer)
+  .digest("hex");
+
     const blockchainResult = await storeRecordOnBlockchain(
       ipfsHash,
-      recordType
+      recordType,
+      fileHash
     );
 
     const record = await Record.create({
@@ -64,6 +71,8 @@ exports.uploadRecord = async (req, res) => {
       fileName: req.file.originalname,
       ipfsHash,
       iv,
+      fileHash,
+      verificationStatus: blockchainResult?.transactionHash ? "verified" : "pending",
       transactionHash: blockchainResult?.transactionHash || "",
     });
 
@@ -80,6 +89,8 @@ exports.uploadRecord = async (req, res) => {
       success: true,
       message: "Encrypted Record Uploaded",
       ipfsHash,
+      fileHash,
+      verificationStatus: record.verificationStatus,
       transactionHash: blockchainResult?.transactionHash,
       record,
     });
