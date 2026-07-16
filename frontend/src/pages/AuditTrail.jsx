@@ -13,6 +13,9 @@ import {
 
 import AppShell from "../components/AppShell";
 import API from "../services/api";
+import EmptyState from "../components/ui/EmptyState";
+import LoadingState from "../components/ui/LoadingState";
+
 
 function getActionIcon(action) {
   const icons = {
@@ -156,23 +159,15 @@ function AuditTrail() {
         className="rounded-3xl border border-white/10 bg-white/[0.06] p-6 shadow-2xl shadow-cyan-950/20 backdrop-blur-xl"
       >
         {loading && (
-          <div className="py-16 text-center text-slate-300">
-            Loading audit logs...
-          </div>
+          <LoadingState message="Loading audit logs..." />
         )}
 
         {!loading && filteredLogs.length === 0 && (
-          <div className="py-16 text-center">
-            <FiClock className="mx-auto mb-4 text-6xl text-cyan-300" />
-
-            <p className="text-2xl font-black text-white">
-              No audit events found
-            </p>
-
-            <p className="mt-2 text-sm text-slate-400">
-              Try a different filter or perform a healthcare record action.
-            </p>
-          </div>
+          <EmptyState
+            icon={<FiClock />}
+            title="No audit events found"
+            message="Try a different filter or perform a healthcare record action."
+          />
         )}
 
         {!loading && filteredLogs.length > 0 && (
