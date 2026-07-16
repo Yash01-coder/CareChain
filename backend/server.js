@@ -40,22 +40,20 @@ mongoose.connect(
 // ROUTES
 // ==========================
 app.use(
-
-  "/api/auth",
+  "/api/v1/auth",
 
   require("./routes/authRoutes")
 );
 
 app.use(
-
-  "/api/records",
+  "/api/v1/records",
 
   require("./routes/recordRoutes")
 );
-  
+
 app.use(
 
-  "/api/doctors",
+  "/api/v1/doctors",
 
   doctorRoutes
 );
