@@ -12,12 +12,14 @@ exports.register = async (req, res) => {
   try {
 
     const {
-      name,
-      email,
-      password,
-      role,
-      walletAddress,
-    } = req.body;
+  name,
+  email,
+  password,
+  role,
+  walletAddress,
+  abhaNumber,
+  abhaAddress,
+} = req.body;
 
     // CHECK EXISTING USER
     const existingUser =
@@ -52,6 +54,10 @@ exports.register = async (req, res) => {
         role,
 
         walletAddress,
+
+        abhaNumber,
+
+        abhaAddress,
       });
 
     const safeUser = {
@@ -60,6 +66,8 @@ exports.register = async (req, res) => {
   email: user.email,
   role: user.role,
   walletAddress: user.walletAddress,
+  abhaNumber: user.abhaNumber,
+  abhaAddress: user.abhaAddress,
   isVerifiedDoctor: user.isVerifiedDoctor,
 };
 
