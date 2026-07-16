@@ -29,16 +29,18 @@ const contract = new ethers.Contract(
 // ==========================
 // STORE RECORD
 // ==========================
-exports.storeRecordOnBlockchain = async (cid, recordType) => {
+exports.storeRecordOnBlockchain = async (cid, recordType, fileHash) => {
 
   try {
 
     console.log("CID:", cid);
     console.log("Record Type:", recordType);
+    console.log("File Hash:", fileHash);
 
     const tx = await contract.addRecord(
       String(cid),
-      String(recordType)
+      String(recordType),
+      String(fileHash) 
     );
 
     const receipt = await tx.wait();
