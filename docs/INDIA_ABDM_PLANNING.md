@@ -29,6 +29,10 @@ Avoid:
 - Wallet address
 - CareChain patient ID
 
+## Implementation Status
+
+The backend user model includes optional `abhaNumber` and `abhaAddress` fields for future ABDM/ABHA-style alignment. These fields are placeholders only and do not represent official ABDM integration.
+
 ## Doctor Identity Fields
 
 - Doctor name

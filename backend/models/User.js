@@ -35,6 +35,18 @@ const userSchema =
     walletAddress: {
       type: String,
     },
+        abhaNumber: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+
+    abhaAddress: {
+      type: String,
+      trim: true,
+      lowercase: true,
+      default: "",
+    },
 
     isVerifiedDoctor: {
       type: Boolean,
