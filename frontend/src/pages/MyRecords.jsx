@@ -11,6 +11,11 @@ import {
 
 import AppShell from "../components/AppShell";
 import api from "../services/api";
+import EmptyState from "../components/ui/EmptyState";
+import LoadingState from "../components/ui/LoadingState";
+import SectionCard from "../components/ui/SectionCard";
+import StatusBadge from "../components/ui/StatusBadge";
+
 
 function MyRecords() {
   const [records, setRecords] = useState([]);
@@ -133,19 +138,17 @@ function MyRecords() {
         className="mt-6 overflow-hidden rounded-3xl border border-white/10 bg-white/[0.06] shadow-2xl shadow-cyan-950/20 backdrop-blur-xl"
       >
         {loading ? (
-          <div className="p-10 text-center text-slate-300">
-            Loading records...
+          <div className="p-6">
+            <LoadingState message="Loading records..." />
           </div>
         ) : filteredRecords.length === 0 ? (
-          <div className="p-12 text-center">
-            <FiFileText className="mx-auto mb-4 text-5xl text-cyan-300" />
-
-            <p className="text-xl font-black text-white">No records found</p>
-
-            <p className="mt-2 text-sm text-slate-400">
-              Upload a record or adjust your search filter.
-            </p>
-          </div>
+          <div className="p-6">
+  <EmptyState
+    icon={<FiFileText />}
+    title="No records found"
+    message="Upload a record or adjust your search filter."
+  />
+</div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full min-w-[1050px]">
