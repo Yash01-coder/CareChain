@@ -146,12 +146,13 @@ function UploadRecord() {
             </p>
 
             <p className="mt-3 max-w-md text-sm leading-6 text-slate-400">
-              Files are encrypted by backend processing before being uploaded to
-              IPFS.
+              Accepted formats: PDF, JPG, PNG, WEBP. Maximum size: 10MB.
+              Files are encrypted by backend processing before being uploaded to IPFS.
             </p>
 
             <input
               type="file"
+              accept=".pdf,.jpg,.jpeg,.png,.webp,application/pdf,image/jpeg,image/png,image/webp"
               onChange={handleFileChange}
               className="hidden"
               required
