@@ -13,9 +13,19 @@ import AppShell from "../components/AppShell";
 import api from "../services/api";
 import EmptyState from "../components/ui/EmptyState";
 import LoadingState from "../components/ui/LoadingState";
-import SectionCard from "../components/ui/SectionCard";
 import StatusBadge from "../components/ui/StatusBadge";
 
+function getVerificationTone(status) {
+  if (status === "verified") return "success";
+  if (status === "unverified") return "danger";
+  return "warning";
+}
+
+function getVerificationLabel(status) {
+  if (status === "verified") return "Verified";
+  if (status === "unverified") return "Unverified";
+  return "Pending";
+}
 
 function MyRecords() {
   const [records, setRecords] = useState([]);
@@ -72,6 +82,8 @@ function MyRecords() {
   const filteredRecords = records.filter((record) => {
     const text = `${record.recordType || ""} ${record.fileName || ""} ${
       record.ipfsHash || ""
+    } ${record.fileHash || ""} ${
+      record.verificationStatus || ""
     }`.toLowerCase();
 
     const matchesSearch = text.includes(search.toLowerCase());
@@ -79,6 +91,10 @@ function MyRecords() {
 
     return matchesSearch && matchesFilter;
   });
+
+  const verifiedCount = records.filter(
+    (record) => record.verificationStatus === "verified"
+  ).length;
 
   return (
     <AppShell
@@ -92,7 +108,7 @@ function MyRecords() {
 
           <input
             type="text"
-            placeholder="Search by record type, file name, or IPFS hash..."
+            placeholder="Search by record type, file name, IPFS hash, or file hash..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full bg-transparent text-white outline-none placeholder:text-slate-500"
@@ -122,7 +138,7 @@ function MyRecords() {
         <div className="rounded-3xl border border-white/10 bg-white/[0.06] p-5 backdrop-blur-xl">
           <FiShield className="mb-4 text-3xl text-cyan-300" />
           <p className="text-sm font-bold text-slate-400">Verified Files</p>
-          <p className="mt-2 text-4xl font-black">{filteredRecords.length}</p>
+          <p className="mt-2 text-4xl font-black">{verifiedCount}</p>
         </div>
 
         <div className="rounded-3xl border border-white/10 bg-white/[0.06] p-5 backdrop-blur-xl">
@@ -143,20 +159,22 @@ function MyRecords() {
           </div>
         ) : filteredRecords.length === 0 ? (
           <div className="p-6">
-  <EmptyState
-    icon={<FiFileText />}
-    title="No records found"
-    message="Upload a record or adjust your search filter."
-  />
-</div>
+            <EmptyState
+              icon={<FiFileText />}
+              title="No records found"
+              message="Upload a record or adjust your search filter."
+            />
+          </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[1050px]">
+            <table className="w-full min-w-[1250px]">
               <thead className="bg-slate-950/80 text-left text-xs uppercase tracking-[0.18em] text-slate-400">
                 <tr>
                   <th className="p-4">Record Type</th>
                   <th className="p-4">File Name</th>
                   <th className="p-4">IPFS Hash</th>
+                  <th className="p-4">File Hash</th>
+                  <th className="p-4">Status</th>
                   <th className="p-4">Transaction Hash</th>
                   <th className="p-4">Upload Date</th>
                   <th className="p-4">Download</th>
@@ -180,6 +198,18 @@ function MyRecords() {
 
                     <td className="max-w-[220px] truncate p-4 font-mono text-xs text-cyan-200">
                       {record.ipfsHash || "-"}
+                    </td>
+
+                    <td className="max-w-[220px] truncate p-4 font-mono text-xs text-emerald-200">
+                      {record.fileHash || "-"}
+                    </td>
+
+                    <td className="p-4">
+                      <StatusBadge
+                        tone={getVerificationTone(record.verificationStatus)}
+                      >
+                        {getVerificationLabel(record.verificationStatus)}
+                      </StatusBadge>
                     </td>
 
                     <td className="max-w-[220px] truncate p-4 font-mono text-xs text-blue-200">
