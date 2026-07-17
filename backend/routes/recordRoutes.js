@@ -22,7 +22,46 @@ const {
 // ==========================
 const storage = multer.memoryStorage();
 
-const upload = multer({ storage });
+const allowedMimeTypes = [
+  "application/pdf",
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+];
+
+const upload = multer({
+  storage,
+  limits: {
+    fileSize: 10 * 1024 * 1024,
+  },
+  fileFilter: (req, file, cb) => {
+    if (!allowedMimeTypes.includes(file.mimetype)) {
+      return cb(
+        new Error("Invalid file type. Only PDF, JPG, PNG, and WEBP files are allowed.")
+      );
+    }
+
+    cb(null, true);
+  },
+});
+
+const handleUpload = (req, res, next) => {
+  upload.single("file")(req, res, (error) => {
+    if (!error) {
+      return next();
+    }
+
+    if (error.code === "LIMIT_FILE_SIZE") {
+      return res.status(400).json({
+        message: "File is too large. Maximum upload size is 10MB.",
+      });
+    }
+
+    return res.status(400).json({
+      message: error.message || "File upload failed.",
+    });
+  });
+};
 
 // ==========================
 // PROTECTED ROUTES

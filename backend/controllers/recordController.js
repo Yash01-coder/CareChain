@@ -37,6 +37,14 @@ exports.uploadRecord = async (req, res) => {
 
     const { recordType } = req.body;
 
+        if (!recordType || !recordType.trim()) {
+      return res.status(400).json({ message: "Record type is required" });
+    }
+
+    if (!req.file.buffer || req.file.buffer.length === 0) {
+      return res.status(400).json({ message: "Uploaded file is empty" });
+    }
+
     let patientWallet = req.body.patientWallet || "";
 
     if (!patientWallet && req.user?.id) {
@@ -60,14 +68,14 @@ exports.uploadRecord = async (req, res) => {
 
     const blockchainResult = await storeRecordOnBlockchain(
       ipfsHash,
-      recordType,
+      recordType.trim(),
       fileHash
     );
 
     const record = await Record.create({
       patient: req.user?.id,
       patientWallet: patientWallet.toLowerCase(),
-      recordType,
+      recordType: recordType.trim(),
       fileName: req.file.originalname,
       ipfsHash,
       iv,
@@ -82,7 +90,7 @@ exports.uploadRecord = async (req, res) => {
       recordId: record._id,
       ipfsHash,
       performedBy: "patient",
-      details: `Uploaded ${recordType}: ${req.file.originalname}`,
+      details: `Uploaded ${recordType.trim()}: ${req.file.originalname}`,
     });
 
     res.status(200).json({
