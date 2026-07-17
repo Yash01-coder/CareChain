@@ -183,6 +183,67 @@ exports.downloadRecord = async (req, res) => {
 };
 
 // ==========================
+// VERIFY RECORD INTEGRITY METADATA
+// Returns proof metadata only. Does not expose file contents.
+// ==========================
+exports.verifyRecordIntegrity = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const record = await Record.findById(id);
+
+    if (!record) {
+      return res.status(404).json({ message: "Record not found" });
+    }
+
+    const requester = await User.findById(req.user?.id);
+
+    if (!requester) {
+      return res.status(403).json({ message: "Unauthorized" });
+    }
+
+    const isOwner = String(record.patient) === String(requester._id);
+
+    let hasDoctorAccess = false;
+
+    if (!isOwner && requester.role === "doctor") {
+      const doctorWallet = requester.walletAddress?.toLowerCase();
+
+      const grant = await AccessGrant.findOne(
+        activeAccessQuery(record.patientWallet, doctorWallet)
+      );
+
+      hasDoctorAccess = !!grant;
+    }
+
+    if (!isOwner && !hasDoctorAccess) {
+      return res.status(403).json({
+        message: "Access denied. You are not authorized to verify this record.",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      recordId: record._id,
+      recordType: record.recordType,
+      fileName: record.fileName,
+      ipfsHash: record.ipfsHash,
+      fileHash: record.fileHash,
+      transactionHash: record.transactionHash,
+      verificationStatus: record.verificationStatus,
+      uploadedAt: record.uploadedAt,
+      access: {
+        isOwner,
+        hasDoctorAccess,
+      },
+    });
+  } catch (error) {
+    console.log("VERIFY RECORD ERROR:", error);
+    res.status(500).json({ message: "Failed to verify record integrity" });
+  }
+};
+
+// ==========================
 // GRANT DOCTOR ACCESS
 // Phase 20/22/27 — saves to MongoDB
 // ==========================
