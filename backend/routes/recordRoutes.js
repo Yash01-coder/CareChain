@@ -9,6 +9,7 @@ const {
   uploadRecord,
   getMyRecords,
   downloadRecord,
+  verifyRecordIntegrity,
   grantDoctorAccess,
   grantEmergencyAccess,
   revokeDoctorAccess,
@@ -44,6 +45,12 @@ router.get(
   "/download/:id",
   authMiddleware,
   downloadRecord
+);
+
+router.get(
+  "/verify/:id",
+  authMiddleware,
+  verifyRecordIntegrity
 );
 
 router.post(
