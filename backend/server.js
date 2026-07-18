@@ -3,15 +3,40 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const doctorRoutes = require("./routes/doctorRoutes");
+const helmet = require("helmet");
 
+const rateLimit = require("express-rate-limit");
 dotenv.config();
 
 const app = express();
+const allowedOrigins = (process.env.FRONTEND_ORIGIN || "http://localhost:5173")
+  .split(",")
+  .map((origin) => origin.trim());
+
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    message: "Too many requests. Please try again later.",
+  },
+});
+
 
 // ==========================
 // MIDDLEWARE
 // ==========================
-app.use(cors());
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  })
+);
+
+app.use(helmet());
+
+app.use("/api", apiLimiter);
 
 app.use(express.json());
 
